@@ -2,7 +2,10 @@ package br.com.igti.modulo_iv
 
 import android.app.Application
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
+import java.util.concurrent.TimeUnit
 
 class IgtiApplicattion : Application() {
 
@@ -14,14 +17,24 @@ class IgtiApplicattion : Application() {
         super.onCreate()
 
         val okHttpClient = OkHttpClient.Builder()
-            .connectTimeout(15L)
-            .readTimeout(15L)
-            .writeTimeout(15L)
+            .connectTimeout(15L, TimeUnit.SECONDS)
+            .readTimeout(15L, TimeUnit.SECONDS)
+            .writeTimeout(15L, TimeUnit.SECONDS)
+            .addInterceptor(HttpLoggingInterceptor { msg ->
+                println("LOG APP: $msg")
+            }.apply {
+                level = HttpLoggingInterceptor.Level.BODY
+            }).addNetworkInterceptor(HttpLoggingInterceptor { msg ->
+                println("LOG NTW: $msg")
+            }.apply {
+                level = HttpLoggingInterceptor.Level.BODY
+            })
             .build()
 
         retrofit = Retrofit.Builder()
-            .client(okHttpClient)
+            .addConverterFactory(GsonConverterFactory.create())
             .baseUrl("https://igti.com.br")
+            .client(okHttpClient)
             .build()
     }
 
