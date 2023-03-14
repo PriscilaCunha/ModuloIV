@@ -1,15 +1,17 @@
 package br.com.igti.modulo_iv.data.remote
 
+import br.com.igti.modulo_iv.data.remote.dto.AlunoRequestDTO
+import br.com.igti.modulo_iv.data.remote.dto.AlunoResponseDTO
 import br.com.igti.modulo_iv.data.remote.dto.MessageDTO
 import retrofit2.Call
 import retrofit2.http.GET
-import retrofit2.http.Path
 
 interface IAlunoRepository {
+    @GET("/alunos")
+    fun listarAlunos() : Call<List<AlunoResponseDTO>>
 
-    fun listarAlunos()
-
-    fun alunoPorId()
+    @GET("/alunos/{id}")
+    fun alunoPorId() : Call<AlunoResponseDTO>
 
     fun cadastrarAluno()
 
@@ -17,7 +19,6 @@ interface IAlunoRepository {
 
     fun excluirAluno()
 
-    @GET
-    @Path("/helloworld")
+    @GET("/helloworld")
     fun helloWorld() : Call<MessageDTO>
 }
