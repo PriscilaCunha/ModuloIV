@@ -7,6 +7,7 @@ import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.PUT
 
 interface IAlunoRepository {
     @GET("/alunos")
@@ -18,7 +19,8 @@ interface IAlunoRepository {
     @POST("/alunos")
     fun cadastrarAluno(@Body aluno : AlunoRequestDTO) : Call<AlunoResponseDTO>
 
-    fun alterarAluno()
+    @PUT("/alunos/{id}")
+    fun alterarAluno(@Body aluno: AlunoRequestDTO) : Call<AlunoResponseDTO>
 
     fun excluirAluno()
 

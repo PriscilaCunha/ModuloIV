@@ -1,6 +1,5 @@
 package br.com.igti.modulo_iv.data.remote
 
-import br.com.igti.modulo_iv.IgtiApplicattion
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -10,10 +9,10 @@ import java.util.concurrent.TimeUnit
 class RetrofitClient {
 
     companion object {
-        private val retrofitClient : RetrofitClient? = null
+        private var instance : RetrofitClient? = null
     }
 
-    val alunoRepository : IAlunoRepository? = null
+    private var alunoRepository : IAlunoRepository? = null
 
     private fun createOkHttpClient() : OkHttpClient {
         return OkHttpClient.Builder()
@@ -32,7 +31,7 @@ class RetrofitClient {
             .build()
     }
 
-    private fun createRetrofitInstance() : RetrofitClient {
+    private fun createRetrofitClient() : RetrofitClient {
         val retrofit = Retrofit.Builder()
             .addConverterFactory(GsonConverterFactory.create())
             .baseUrl("http://igtiandroid.ddns.net:8080")
@@ -43,10 +42,10 @@ class RetrofitClient {
     }
 
     fun getInstance() : RetrofitClient {
-        if(retrofitClient == null){
-            retrofitClient = createRetrofitInstance()
+        if(instance == null){
+            instance = createRetrofitClient()
         }
-        return retrofitClient
+        return instance as RetrofitClient
     }
 
     fun getAlunoApi() = alunoRepository
