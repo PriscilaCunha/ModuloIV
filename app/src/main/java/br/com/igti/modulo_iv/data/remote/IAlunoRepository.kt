@@ -1,5 +1,10 @@
 package br.com.igti.modulo_iv.data.remote
 
+import br.com.igti.modulo_iv.data.remote.dto.MessageDTO
+import retrofit2.Call
+import retrofit2.http.GET
+import retrofit2.http.Path
+
 interface IAlunoRepository {
 
     fun listarAlunos()
@@ -12,4 +17,7 @@ interface IAlunoRepository {
 
     fun excluirAluno()
 
+    @GET
+    @Path("/helloworld")
+    fun helloWorld() : Call<MessageDTO>
 }
