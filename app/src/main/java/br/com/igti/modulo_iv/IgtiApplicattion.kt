@@ -8,16 +8,4 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
-class IgtiApplicattion : Application() {
-
-    companion object {
-        lateinit var retrofit : Retrofit
-    }
-
-    override fun onCreate() {
-        super.onCreate()
-
-    }
-
-
-}
+class IgtiApplicattion : Application()

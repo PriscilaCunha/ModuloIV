@@ -9,7 +9,11 @@ import java.util.concurrent.TimeUnit
 
 class RetrofitClient {
 
-    private val retrofitClient : RetrofitClient? = null
+    companion object {
+        private val retrofitClient : RetrofitClient? = null
+    }
+
+    val alunoRepository : IAlunoRepository? = null
 
     private fun createOkHttpClient() : OkHttpClient {
         return OkHttpClient.Builder()
@@ -28,14 +32,28 @@ class RetrofitClient {
             .build()
     }
 
-    private fun createRetrofitInstance() {
-        IgtiApplicattion.retrofit = Retrofit.Builder()
+    private fun createRetrofitInstance() : RetrofitClient {
+        val retrofit = Retrofit.Builder()
             .addConverterFactory(GsonConverterFactory.create())
             .baseUrl("http://igtiandroid.ddns.net:8080")
             .client(createOkHttpClient())
             .build()
 
-        IgtiApplicattion.retrofit.create(IAlunoRepository::class.java)
+        alunoRepository = retrofit.create(IAlunoRepository::class.java)
     }
+
+    fun getInstance() : RetrofitClient {
+        if(retrofitClient == null){
+            retrofitClient = createRetrofitInstance()
+        }
+        return retrofitClient
+    }
+
+    fun getAlunoApi() = alunoRepository
+
+
+
+
+
 
 }
