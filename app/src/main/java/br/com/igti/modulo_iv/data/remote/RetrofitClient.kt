@@ -14,6 +14,16 @@ class RetrofitClient {
 
     private var alunoRepository : IAlunoRepository? = null
 
+    init {
+        val retrofit = Retrofit.Builder()
+            .addConverterFactory(GsonConverterFactory.create())
+            .baseUrl("http://igtiandroid.ddns.net:8080")
+            .client(createOkHttpClient())
+            .build()
+
+        alunoRepository = retrofit.create(IAlunoRepository::class.java)
+    }
+
     private fun createOkHttpClient() : OkHttpClient {
         return OkHttpClient.Builder()
             .connectTimeout(15L, TimeUnit.SECONDS)
@@ -31,28 +41,14 @@ class RetrofitClient {
             .build()
     }
 
-    private fun createRetrofitClient() : RetrofitClient {
-        val retrofit = Retrofit.Builder()
-            .addConverterFactory(GsonConverterFactory.create())
-            .baseUrl("http://igtiandroid.ddns.net:8080")
-            .client(createOkHttpClient())
-            .build()
-
-        alunoRepository = retrofit.create(IAlunoRepository::class.java)
-    }
-
+    @Synchronized
     fun getInstance() : RetrofitClient {
         if(instance == null){
-            instance = createRetrofitClient()
+            instance = RetrofitClient()
         }
         return instance as RetrofitClient
     }
 
     fun getAlunoApi() = alunoRepository
-
-
-
-
-
 
 }
