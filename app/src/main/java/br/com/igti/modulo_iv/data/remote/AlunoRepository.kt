@@ -1,26 +1,34 @@
 package br.com.igti.modulo_iv.data.remote
 
+import br.com.igti.modulo_iv.data.remote.dto.AlunoRequestDTO
+import br.com.igti.modulo_iv.data.remote.dto.AlunoResponseDTO
 import br.com.igti.modulo_iv.data.remote.dto.MessageDTO
+import okhttp3.Response
 import retrofit2.Call
+import retrofit2.http.Body
+import retrofit2.http.Path
 
 class AlunoRepository : IAlunoRepository {
-    override fun listarAlunos() {
+    override fun listarAlunos(): Call<List<AlunoResponseDTO>> {
         TODO("Not yet implemented")
     }
 
-    override fun alunoPorId() {
+    override fun alunoPorId(@Path(value = "id") id: String): Call<AlunoResponseDTO> {
         TODO("Not yet implemented")
     }
 
-    override fun cadastrarAluno() {
+    override fun cadastrarAluno(@Body aluno: AlunoRequestDTO): Call<AlunoResponseDTO> {
         TODO("Not yet implemented")
     }
 
-    override fun alterarAluno() {
+    override fun alterarAluno(
+        @Path(value = "id") id: String,
+        @Body aluno: AlunoRequestDTO
+    ): Call<AlunoResponseDTO> {
         TODO("Not yet implemented")
     }
 
-    override fun excluirAluno() {
+    override fun excluirAluno(@Path(value = "id") id: String): Call<Response> {
         TODO("Not yet implemented")
     }
 

@@ -10,22 +10,23 @@ import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.PUT
+import retrofit2.http.Path
 
 interface IAlunoRepository {
     @GET("/alunos")
     fun listarAlunos() : Call<List<AlunoResponseDTO>>
 
     @GET("/alunos/{id}")
-    fun alunoPorId() : Call<AlunoResponseDTO>
+    fun alunoPorId(@Path("id") id : String) : Call<AlunoResponseDTO>
 
     @POST("/alunos")
     fun cadastrarAluno(@Body aluno : AlunoRequestDTO) : Call<AlunoResponseDTO>
 
     @PUT("/alunos/{id}")
-    fun alterarAluno(@Body aluno: AlunoRequestDTO) : Call<AlunoResponseDTO>
+    fun alterarAluno(@Path("id") id : String, @Body aluno: AlunoRequestDTO) : Call<AlunoResponseDTO>
 
     @DELETE("/alunos/{id}")
-    fun excluirAluno() : Call<Response>
+    fun excluirAluno(@Path("id") id : String) : Call<Response>
 
     @GET("/helloworld")
     fun helloWorld() : Call<MessageDTO>
