@@ -6,11 +6,11 @@ import java.time.LocalDate
 
 data class AlunoResponseDTO (
     @SerializedName("id")
-    private val id : String,
+    val id : String,
     @SerializedName("nome")
-    private val nome : String,
+    val nome : String,
     @SerializedName("sobrenome")
-    private val sobrenome : String,
+    val sobrenome : String,
     @SerializedName("nascimento")
-    private val nascimento : LocalDate
+    val nascimento : LocalDate
 ) : Serializable
