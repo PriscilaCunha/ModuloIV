@@ -44,8 +44,8 @@ class AlunoViewModel(
                     response: Response<List<AlunoResponseDTO>>
                 ) {
                     if(response.isSuccessful) {
-                        response.body()?.let {
-                            _listaAlunosFlow.value = it
+                        response.body()?.let { list ->
+                            _listaAlunosFlow.value = list
                         }
                     }
                 }

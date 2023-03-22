@@ -1,9 +1,12 @@
 package br.com.igti.modulo_iv.data.remote
 
+import br.com.igti.modulo_iv.util.LocalDateAdapter
+import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.time.LocalDate
 import java.util.concurrent.TimeUnit
 
 class RetrofitClient {
@@ -15,8 +18,14 @@ class RetrofitClient {
     private var alunoRepository : IAlunoRepository? = null
 
     init {
+        // Creating custom adapter
+        val gson = GsonBuilder().registerTypeAdapter(
+            LocalDate::class.java,
+            LocalDateAdapter().nullSafe() // avoid null fields
+        ).create()
+
         val retrofit = Retrofit.Builder()
-            .addConverterFactory(GsonConverterFactory.create())
+            .addConverterFactory(GsonConverterFactory.create(gson))
             .baseUrl("http://igtiandroid.ddns.net:8080")
             .client(createOkHttpClient())
             .build()
