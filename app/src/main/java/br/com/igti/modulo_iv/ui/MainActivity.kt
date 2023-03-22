@@ -5,6 +5,7 @@ import androidx.activity.viewModels
 import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
@@ -12,6 +13,7 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import br.com.igti.modulo_iv.R
 import br.com.igti.modulo_iv.databinding.ActivityMainBinding
 import br.com.igti.modulo_iv.viewmodel.AlunoViewModel
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 
 class MainActivity : AppCompatActivity() {
@@ -56,6 +58,14 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }*/
+        alunoViewModel.listarAlunos()
+        lifecycleScope.launch {
+            alunoViewModel.listaAlunosFlow.collect { lista ->
+                if (!lista.isNullOrEmpty()) {
+                    lista.map { println(it) }
+                }
+            }
+        }
 
 
     }
